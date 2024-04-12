@@ -3,10 +3,10 @@
     "builds": [
         {
             "src": "index.js",
-            "use": "@vercel/node"
-        },
-        {
-            "installCommand": "npx @puppeteer/browsers install chrome@116.0.5793.0"
+            "use": "@vercel/node",
+            "config": {
+                "installCommand": "npx @puppeteer/browsers install chrome@116.0.5793.0"
+            }
         }
     ],
     "routes": [
