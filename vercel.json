@@ -1,5 +1,6 @@
 {
     "version": 2,
+    "installCommand": "npx @puppeteer/browsers install chrome@116.0.5793.0",
     "builds": [
         {
             "src": "index.js",
