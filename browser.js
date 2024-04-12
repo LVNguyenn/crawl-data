@@ -24,7 +24,7 @@ const startBrowser = async () => {
     });
   } catch (error) {
     console.log("1234");
-    console.log("File path", chromePath);
+    //console.log("File path", chromePath);
     console.log("Unable to create browser: " + error);
   }
 
