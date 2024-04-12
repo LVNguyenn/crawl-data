@@ -248,6 +248,8 @@ const scraper = async (browser, url) => {
 
     return scrapeData;
   } catch (error) {
+    console.log("6789");
+    console.log("Error in scraper", error);
     throw error;
   }
 };
