@@ -1,18 +1,12 @@
 {
     "version": 2,
-    "installCommand": "npx @puppeteer/browsers install chrome@116.0.5793.0",
     "builds": [
         {
             "src": "index.js",
-            "use": "@vercel/node",
-            "config": {
-                "build": {
-                    "commands": [
-                        "npm install",
-                        "npm run install-chrome"
-                    ]
-                }
-            }
+            "use": "@vercel/node"
+        },
+        {
+            "installCommand": "npx @puppeteer/browsers install chrome@116.0.5793.0"
         }
     ],
     "routes": [
