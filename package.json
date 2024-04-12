@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "install-puppeteer": "npx @puppeteer/browsers install chrome@116.0.5793.0"
+    "install-chrome": "npx @puppeteer/browsers install chrome@116.0.5793.0"
   },
   "keywords": [],
   "author": "",
