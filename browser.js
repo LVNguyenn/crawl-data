@@ -23,7 +23,7 @@ const startBrowser = async () => {
     //   ignoreHTTPSErrors: true,
     // });
   } catch (error) {
-    console.log("1234");
+    console.log("123");
     console.log("Unable to create browser: " + error);
   }
 
