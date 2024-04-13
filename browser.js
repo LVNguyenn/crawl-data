@@ -9,7 +9,7 @@ const startBrowser = async () => {
       //executablePath: "./chrome/win64-116.0.5793.0/chrome-win64/chrome.exe",
       //executablePath: chromePath,
       executablePath:
-        "/vercel/.cache/puppeteer/chrome/linux-123.0.6312.122/chrome-linux64/chrome",
+        "/vercel/.cache/puppeteer/chrome/linux-123.0.6312.122/chrome-linux64/chrome.exe",
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
       ignoreHTTPSErrors: true,
     });
