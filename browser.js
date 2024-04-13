@@ -10,7 +10,7 @@ const startBrowser = async () => {
   try {
     const chromePath = path.join(
       process.cwd(), // Thư mục làm việc hiện tại trên Vercel
-      "vercel/path0/chrome/linux-116.0.5793.0/chrome-linux64/chrome/linux64-116.0.5793.0/chrome-linux64/chrome.exe"
+      "/vercel/path0/chrome/linux-116.0.5793.0/chrome-linux64/chrome/linux64-116.0.5793.0/chrome-linux64/chrome.exe"
     );
 
     browser = await puppeteer.launch({
