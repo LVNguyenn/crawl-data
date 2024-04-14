@@ -9,6 +9,7 @@ const filePath = path.join(__dirname, "./article.json");
 const connectDB = require("./db/connect");
 const Article = require("./models/articleModel");
 const scraper = require("./scraper");
+const axios = require("axios");
 require("dotenv").config();
 
 // cron.schedule(
@@ -103,34 +104,54 @@ require("dotenv").config();
 //   });
 // });
 
+// app.get("/scrape", async (req, res) => {
+//   const url = "https://lifestyle.znews.vn/oto-xe-may.html";
+//   let browser1 = await startBrowser();
+
+//   try {
+//     const browser = browser1;
+
+//     const result = await scraper(browser, url);
+
+//     if (result.length !== 0) {
+//       try {
+//         await Article.insertMany(result);
+
+//         res
+//           .status(200)
+//           .json({ message: "Added new data to MongoDB successfully." });
+//       } catch (error) {
+//         console.error("Error saving data to MongoDB:", error);
+//         res.status(500).json({ error: "Internal Server Error" });
+//       }
+//     } else {
+//       res.status(200).json({ message: "No new articles" });
+//     }
+
+//     await browser.close();
+//     console.log("Browser is closed");
+//   } catch (error) {
+//     console.log("Error in scrape route: ", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
 app.get("/scrape", async (req, res) => {
-  const url = "https://lifestyle.znews.vn/oto-xe-may.html";
-  let browser1 = await startBrowser();
+  const scrapeApiUrl = "https://crawl-4tjn.onrender.com/scrape";
 
   try {
-    const browser = browser1;
+    const response = await axios.get(scrapeApiUrl);
 
-    const result = await scraper(browser, url);
-
-    if (result.length !== 0) {
-      try {
-        await Article.insertMany(result);
-
-        res
-          .status(200)
-          .json({ message: "Added new data to MongoDB successfully." });
-      } catch (error) {
-        console.error("Error saving data to MongoDB:", error);
-        res.status(500).json({ error: "Internal Server Error" });
-      }
+    if (response.status === 200) {
+      // Nếu API crawl thành công, xử lý dữ liệu trả về ở đây (nếu cần)
+      res
+        .status(200)
+        .json({ message: "Successfully triggered external scraper" });
     } else {
-      res.status(200).json({ message: "No new articles" });
+      res.status(500).json({ error: "External API returned an error" });
     }
-
-    await browser.close();
-    console.log("Browser is closed");
   } catch (error) {
-    console.log("Error in scrape route: ", error);
+    console.error("Error calling external API:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

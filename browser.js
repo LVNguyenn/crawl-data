@@ -1,6 +1,6 @@
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-core");
 const path = require("path");
-const chromium = require("chrome-aws-lambda");
+//const chromium = require("chrome-aws-lambda");
 
 const startBrowser = async () => {
   let browser;
@@ -22,14 +22,17 @@ const startBrowser = async () => {
     //   headless: true,
     //   ignoreHTTPSErrors: true,
     // });
-    browser = await puppeteer.launch({
+    const executablePath = await chromium.executablePath;
+    browser = await chromium.puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath,
+      executablePath,
       headless: true,
       ignoreHTTPSErrors: true,
     });
   } catch (error) {
+    const executablePath = await chromium.executablePath;
+    console.log(executablePath);
     console.log("123");
     console.log("Unable to create browser: " + error);
   }
