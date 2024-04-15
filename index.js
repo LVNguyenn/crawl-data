@@ -3,7 +3,16 @@ const app = express();
 const connectDB = require("./db/connect");
 const Article = require("./models/articleModel");
 const axios = require("axios");
+const cors = require("cors");
 require("dotenv").config();
+
+const corsOptions = {
+  origin: ["http://localhost:3000"],
+  methods: ["GET"],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 app.get("/scrape", async (req, res) => {
   const scrapeApiUrl = "https://crawl-4tjn.onrender.com/scrape";
