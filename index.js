@@ -4,6 +4,9 @@ const connectDB = require("./db/connect");
 const Article = require("./models/articleModel");
 const axios = require("axios");
 const cors = require("cors");
+const dayjs = require("dayjs");
+const vi = require("dayjs/locale/vi");
+dayjs.locale(vi);
 require("dotenv").config();
 
 const corsOptions = {
@@ -13,6 +16,18 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+function formatPublishDate(publishDate) {
+  const formattedDayOfWeek = dayjs(publishDate).format("dddd");
+  const formattedDate = dayjs(publishDate).format("DD/MM/YYYY HH:mm");
+
+  const capitalizedDayOfWeek =
+    formattedDayOfWeek.charAt(0).toUpperCase() + formattedDayOfWeek.slice(1);
+
+  const formattedPublishDate = `${capitalizedDayOfWeek}, ${formattedDate} (GMT+7)`;
+
+  return formattedPublishDate;
+}
 
 app.get("/scrape", async (req, res) => {
   const scrapeApiUrl = "https://crawl-4tjn.onrender.com/scrape";
@@ -45,13 +60,18 @@ app.get("/articles", async (req, res) => {
       .limit(perPage)
       .exec();
 
-    const transformedArticles = articlesData.map((article) => ({
-      id: article.id,
-      thumbnail: article.thumbnail,
-      title: article.title,
-      publish: article.meta.publish,
-      summary: article.summary,
-    }));
+    const transformedArticles = articlesData.map((article) => {
+      const publishDate = dayjs(article.meta.publish);
+      const formattedDate = publishDate.format("DD/MM/YYYY HH:mm");
+
+      return {
+        id: article.id,
+        thumbnail: article.thumbnail,
+        title: article.title,
+        publish: formattedDate,
+        summary: article.summary,
+      };
+    });
 
     const totalArticlesCount = await Article.countDocuments();
     const hasNextPage = startIndex + perPage < totalArticlesCount;
@@ -80,8 +100,13 @@ app.get("/articles/:id", async (req, res) => {
         .status(404)
         .json({ status: "failed", msg: "Article not found" });
     }
+    const formatDay = formatPublishDate(article.meta.publish);
 
-    res.json(article);
+    const formattedArticle = {
+      ...article._doc,
+      publish: formatDay,
+    };
+    res.json(formattedArticle);
   } catch (error) {
     console.error("Error fetching article:", error);
     res.status(500).json({ status: "failed", msg: "Internal server error" });
