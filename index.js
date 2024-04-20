@@ -66,7 +66,7 @@ app.get("/articles", async (req, res) => {
       .exec();
 
     const transformedArticles = articlesData.map((article) => {
-      const publishDate = dayjs(article.meta.publish);
+      const publishDate = dayjs(article.meta.publish).utcOffset(7);
       const formattedDate = publishDate.format("DD/MM/YYYY HH:mm");
 
       return {
