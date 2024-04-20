@@ -5,9 +5,12 @@ const Article = require("./models/articleModel");
 const axios = require("axios");
 const cors = require("cors");
 const dayjs = require("dayjs");
+const utc = require("dayjs/plugin/utc");
 const vi = require("dayjs/locale/vi");
 dayjs.locale(vi);
 require("dotenv").config();
+
+dayjs.extend(utc);
 
 const corsOptions = {
   origin: ["http://localhost:3000"],
@@ -18,8 +21,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 function formatPublishDate(publishDate) {
-  const formattedDayOfWeek = dayjs(publishDate).format("dddd");
-  const formattedDate = dayjs(publishDate).format("DD/MM/YYYY HH:mm");
+  const formattedDayOfWeek = dayjs(publishDate).utcOffset(7).format("dddd");
+  const formattedDate = dayjs(publishDate)
+    .utcOffset(7)
+    .format("DD/MM/YYYY HH:mm");
 
   const capitalizedDayOfWeek =
     formattedDayOfWeek.charAt(0).toUpperCase() + formattedDayOfWeek.slice(1);
