@@ -21,9 +21,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 function formatPublishDate(publishDate) {
-  const formattedDayOfWeek = dayjs(publishDate).utcOffset(7).format("dddd");
+  const formattedDayOfWeek = dayjs(publishDate).utcOffset(0).format("dddd");
   const formattedDate = dayjs(publishDate)
-    .utcOffset(7)
+    .utcOffset(0)
     .format("DD/MM/YYYY HH:mm");
 
   const capitalizedDayOfWeek =
@@ -66,7 +66,7 @@ app.get("/articles", async (req, res) => {
       .exec();
 
     const transformedArticles = articlesData.map((article) => {
-      const publishDate = dayjs(article.meta.publish).utcOffset(7);
+      const publishDate = dayjs(article.meta.publish).utcOffset(0);
       const formattedDate = publishDate.format("DD/MM/YYYY HH:mm");
 
       return {
