@@ -13,7 +13,7 @@ require("dotenv").config();
 dayjs.extend(utc);
 
 const corsOptions = {
-  origin: ["http://localhost:3000"],
+  origin: ["http://localhost:3000", "https://fe-salon-oto.vercel.app"],
   methods: ["GET"],
   credentials: true,
 };
