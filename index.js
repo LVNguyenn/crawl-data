@@ -35,7 +35,7 @@ function formatPublishDate(publishDate) {
 }
 
 app.get("/scrape", async (req, res) => {
-  const scrapeApiUrl = "https://crawl-zing.onrender.com/scrape";
+  const scrapeApiUrl = "https://crawl-p21j.onrender.com/scrape";
 
   try {
     const response = await axios.get(scrapeApiUrl);
